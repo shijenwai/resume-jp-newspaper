@@ -1,0 +1,928 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>履歴書 — SHIJE WAI | Frontend Developer & Designer</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@400;700;900&family=Noto+Sans+JP:wght@300;400;500;700;900&family=Zen+Kaku+Gothic+New:wght@400;500;700;900&display=swap" rel="stylesheet">
+<style>
+:root {
+    --news-bg: #f4f1ea;
+    --news-paper: #faf8f3;
+    --news-ink: #1a1a1a;
+    --news-accent: #c8302b;
+    --news-border: #d4cfc5;
+    --news-muted: #666;
+    --speed-line: rgba(26, 26, 26, 0.08);
+    --halftone-dot: rgba(0, 0, 0, 0.12);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: 'Noto Sans JP', 'Zen Kaku Gothic New', sans-serif;
+    background: var(--news-bg);
+    color: var(--news-ink);
+    line-height: 1.8;
+    min-height: 100vh;
+    position: relative;
+}
+
+/* Paper Texture Background */
+body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image:
+        repeating-linear-gradient(
+            0deg,
+            transparent,
+            transparent 1px,
+            rgba(0, 0, 0, 0.015) 1px,
+            rgba(0, 0, 0, 0.015) 2px
+        ),
+        url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 0;
+}
+
+/* Newspaper Container */
+.newspaper {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 40px 24px;
+    position: relative;
+    z-index: 1;
+}
+
+/* Main Paper Sheet */
+.paper-sheet {
+    background: var(--news-paper);
+    box-shadow:
+        0 2px 0 var(--news-border),
+        0 4px 0 var(--news-border),
+        0 6px 0 var(--news-border),
+        0 8px 0 var(--news-border),
+        0 25px 50px rgba(0, 0, 0, 0.15);
+    border-radius: 2px;
+    overflow: hidden;
+    position: relative;
+}
+
+/* Halftone Pattern Overlay */
+.halftone-overlay {
+    position: absolute;
+    inset: 0;
+    background-image:
+        radial-gradient(circle at 20% 30%, var(--halftone-dot) 0 1.5px, transparent 1.5px),
+        radial-gradient(circle at 80% 70%, var(--halftone-dot) 0 1.5px, transparent 1.5px);
+    background-size: 4px 4px;
+    pointer-events: none;
+    mix-blend-mode: multiply;
+    opacity: 0.6;
+}
+
+/* Newspaper Header */
+.paper-header {
+    background: linear-gradient(to bottom, #fff 0%, var(--news-paper) 100%);
+    border-bottom: 3px solid var(--news-ink);
+    padding: 24px 32px;
+    position: relative;
+}
+
+.paper-header::after {
+    content: '';
+    position: absolute;
+    bottom: -8px;
+    left: 0;
+    right: 0;
+    height: 5px;
+    background: repeating-linear-gradient(
+        90deg,
+        var(--news-ink) 0px,
+        var(--news-ink) 8px,
+        transparent 8px,
+        transparent 16px
+    );
+}
+
+/* Masthead */
+.masthead {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 16px;
+}
+
+.masthead-title {
+    font-family: 'Noto Serif JP', serif;
+    font-size: clamp(32px, 6vw, 56px);
+    font-weight: 900;
+    letter-spacing: 0.3em;
+    color: var(--news-ink);
+    text-shadow:
+        2px 2px 0 rgba(200, 48, 43, 0.1);
+    border-left: 6px solid var(--news-accent);
+    padding-left: 16px;
+}
+
+.masthead-meta {
+    text-align: right;
+    font-size: 12px;
+    color: var(--news-muted);
+    font-family: 'Zen Kaku Gothic New', sans-serif;
+}
+
+.issue-info {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 16px;
+    margin-bottom: 4px;
+}
+
+.issue-number {
+    background: var(--news-ink);
+    color: #fff;
+    padding: 4px 12px;
+    font-weight: 700;
+    font-size: 11px;
+    letter-spacing: 0.1em;
+}
+
+/* Hero Section with Speed Lines */
+.hero-section {
+    position: relative;
+    padding: 48px 32px;
+    background: linear-gradient(135deg, #fff 0%, var(--news-paper) 100%);
+    overflow: hidden;
+}
+
+/* Speed Lines Effect */
+.speed-lines {
+    position: absolute;
+    inset: 0;
+    background: repeating-conic-gradient(
+        from 0deg at 50% 50%,
+        transparent 0deg 8deg,
+        var(--speed-line) 8deg 9deg
+    );
+    opacity: 0.4;
+    pointer-events: none;
+}
+
+.speed-lines-reverse {
+    position: absolute;
+    inset: 0;
+    background: repeating-conic-gradient(
+        from 180deg at 50% 50%,
+        transparent 0deg 6deg,
+        var(--speed-line) 6deg 7deg
+    );
+    opacity: 0.3;
+    pointer-events: none;
+}
+
+/* Hero Content */
+.hero-content {
+    position: relative;
+    z-index: 2;
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 32px;
+    align-items: center;
+}
+
+.hero-main {
+    flex: 1;
+}
+
+.hero-title {
+    font-family: 'Noto Serif JP', serif;
+    font-size: clamp(28px, 4vw, 42px);
+    font-weight: 900;
+    line-height: 1.3;
+    margin-bottom: 12px;
+    letter-spacing: 0.05em;
+}
+
+.hero-subtitle {
+    font-size: clamp(14px, 2vw, 18px);
+    color: var(--news-muted);
+    font-weight: 500;
+    margin-bottom: 16px;
+}
+
+/* Manga Speech Bubble */
+.speech-bubble {
+    display: inline-flex;
+    align-items: center;
+    background: #fff;
+    border: 3px solid var(--news-ink);
+    border-radius: 20px;
+    padding: 12px 20px;
+    font-weight: 700;
+    font-size: 14px;
+    box-shadow: 4px 4px 0 var(--news-ink);
+    position: relative;
+    transform: rotate(-2deg);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.speech-bubble:hover {
+    transform: rotate(0deg) translateY(-2px);
+    box-shadow: 6px 6px 0 var(--news-ink);
+}
+
+.speech-bubble::before {
+    content: '';
+    position: absolute;
+    bottom: -12px;
+    left: 24px;
+    width: 0;
+    height: 0;
+    border-left: 12px solid transparent;
+    border-right: 12px solid transparent;
+    border-top: 14px solid var(--news-ink);
+}
+
+.speech-bubble::after {
+    content: '';
+    position: absolute;
+    bottom: -7px;
+    left: 27px;
+    width: 0;
+    height: 0;
+    border-left: 9px solid transparent;
+    border-right: 9px solid transparent;
+    border-top: 11px solid #fff;
+}
+
+/* Portrait Frame with Manga Effect */
+.portrait-frame {
+    position: relative;
+    width: 160px;
+    height: 160px;
+    border: 4px solid var(--news-ink);
+    background: linear-gradient(135deg, var(--news-accent) 0%, #a82824 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 8px 8px 0 var(--news-ink);
+    overflow: hidden;
+}
+
+.portrait-frame::before {
+    content: '';
+    position: absolute;
+    inset: 8px;
+    border: 2px dashed #fff;
+    border-radius: 50%;
+}
+
+.portrait-initials {
+    font-family: 'Noto Serif JP', serif;
+    font-size: 64px;
+    font-weight: 900;
+    color: #fff;
+    text-shadow: 2px 2px 0 var(--news-ink);
+}
+
+/* Sparkle Effect */
+.sparkle {
+    position: absolute;
+    width: 20px;
+    height: 20px;
+}
+
+.sparkle::before,
+.sparkle::after {
+    content: '';
+    position: absolute;
+    background: var(--news-ink);
+}
+
+.sparkle::before {
+    width: 100%;
+    height: 3px;
+    top: 50%;
+    left: 0;
+    transform: translateY(-50%);
+}
+
+.sparkle::after {
+    width: 3px;
+    height: 100%;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.sparkle-1 { top: -10px; right: -10px; transform: rotate(45deg); }
+.sparkle-2 { bottom: -10px; left: -10px; transform: rotate(-30deg); }
+
+/* Content Grid */
+.content-grid {
+    display: grid;
+    grid-template-columns: 1fr 320px;
+    gap: 0;
+    border-top: 2px solid var(--news-border);
+}
+
+/* Main Content Area */
+.main-content {
+    padding: 32px;
+    border-right: 1px solid var(--news-border);
+}
+
+/* Sidebar */
+.sidebar {
+    padding: 32px 24px;
+    background: rgba(244, 241, 234, 0.5);
+}
+
+/* Section Styles */
+.section {
+    margin-bottom: 32px;
+}
+
+.section-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 16px;
+    padding-bottom: 8px;
+    border-bottom: 2px solid var(--news-ink);
+}
+
+.section-icon {
+    width: 32px;
+    height: 32px;
+    background: var(--news-accent);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 16px;
+    color: #fff;
+    font-weight: 700;
+}
+
+.section-title {
+    font-family: 'Noto Serif JP', serif;
+    font-size: 20px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+}
+
+/* Article Style */
+.article {
+    margin-bottom: 20px;
+    padding-bottom: 16px;
+    border-bottom: 1px dashed var(--news-border);
+}
+
+.article:last-child {
+    border-bottom: none;
+}
+
+.article-headline {
+    font-size: 16px;
+    font-weight: 700;
+    margin-bottom: 8px;
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+}
+
+.article-headline::before {
+    content: '●';
+    color: var(--news-accent);
+    font-size: 12px;
+    margin-top: 4px;
+}
+
+.article-meta {
+    font-size: 12px;
+    color: var(--news-muted);
+    margin-bottom: 8px;
+}
+
+.article-content {
+    font-size: 14px;
+    line-height: 1.8;
+    color: #333;
+}
+
+.article-content ul {
+    list-style: none;
+    padding-left: 20px;
+}
+
+.article-content li {
+    position: relative;
+    margin-bottom: 6px;
+}
+
+.article-content li::before {
+    content: '▸';
+    position: absolute;
+    left: -16px;
+    color: var(--news-muted);
+}
+
+/* Skill Tags */
+.skill-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.skill-tag {
+    display: inline-flex;
+    align-items: center;
+    background: #fff;
+    border: 2px solid var(--news-ink);
+    padding: 6px 12px;
+    font-size: 12px;
+    font-weight: 500;
+    box-shadow: 2px 2px 0 var(--news-ink);
+    transition: transform 0.15s ease, box-shadow 0.15s ease;
+    cursor: default;
+}
+
+.skill-tag:hover {
+    transform: translate(-1px, -1px);
+    box-shadow: 3px 3px 0 var(--news-ink);
+}
+
+.skill-tag.level-expert {
+    background: var(--news-accent);
+    color: #fff;
+}
+
+.skill-tag.level-advanced {
+    background: var(--news-ink);
+    color: #fff;
+}
+
+/* Contact Info Box */
+.contact-box {
+    background: #fff;
+    border: 2px solid var(--news-ink);
+    padding: 16px;
+    margin-bottom: 20px;
+    box-shadow: 3px 3px 0 var(--news-ink);
+    position: relative;
+}
+
+.contact-box::before {
+    content: '連絡先';
+    position: absolute;
+    top: -10px;
+    left: 12px;
+    background: var(--news-accent);
+    color: #fff;
+    font-size: 11px;
+    font-weight: 700;
+    padding: 2px 10px;
+    letter-spacing: 0.1em;
+}
+
+.contact-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 13px;
+    margin-bottom: 8px;
+}
+
+.contact-item:last-child {
+    margin-bottom: 0;
+}
+
+.contact-icon {
+    width: 20px;
+    height: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--news-border);
+    border-radius: 50%;
+    font-size: 10px;
+}
+
+/* Award Badge */
+.award-badge {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    background: linear-gradient(135deg, #fff8e8 0%, #fff 100%);
+    border: 2px solid #d4a574;
+    padding: 12px 16px;
+    margin-bottom: 12px;
+    border-radius: 4px;
+}
+
+.award-icon {
+    width: 36px;
+    height: 36px;
+    background: linear-gradient(135deg, #ffd700 0%, #ffb800 100%);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 16px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.award-text {
+    flex: 1;
+}
+
+.award-title {
+    font-weight: 700;
+    font-size: 13px;
+}
+
+.award-year {
+    font-size: 11px;
+    color: var(--news-muted);
+}
+
+/* Motion Lines for Emphasis */
+.motion-lines {
+    position: relative;
+    display: inline-block;
+}
+
+.motion-lines::before,
+.motion-lines::after {
+    content: '';
+    position: absolute;
+    left: -8px;
+    width: 4px;
+    height: 100%;
+    background: repeating-linear-gradient(
+        to bottom,
+        var(--news-ink) 0px,
+        var(--news-ink) 2px,
+        transparent 2px,
+        transparent 6px
+    );
+    opacity: 0.3;
+}
+
+.motion-lines::after {
+    left: auto;
+    right: -8px;
+}
+
+/* Bang Effect */
+.bang-effect {
+    display: inline-block;
+    position: relative;
+}
+
+.bang-effect::before {
+    content: 'ドン！';
+    position: absolute;
+    top: -20px;
+    right: -30px;
+    font-family: 'Noto Serif JP', serif;
+    font-size: 24px;
+    font-weight: 900;
+    color: var(--news-accent);
+    text-shadow: 2px 2px 0 #fff, -1px -1px 0 #fff, 1px -1px 0 #fff, -1px 1px 0 #fff;
+    transform: rotate(15deg);
+}
+
+/* Paper Footer */
+.paper-footer {
+    background: var(--news-ink);
+    color: #fff;
+    padding: 16px 32px;
+    text-align: center;
+    font-size: 12px;
+}
+
+.footer-text {
+    opacity: 0.8;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .newspaper {
+        padding: 20px 16px;
+    }
+
+    .paper-header {
+        padding: 20px;
+    }
+
+    .hero-section {
+        padding: 32px 20px;
+    }
+
+    .hero-content {
+        grid-template-columns: 1fr;
+        text-align: center;
+    }
+
+    .portrait-frame {
+        margin: 0 auto;
+    }
+
+    .speech-bubble {
+        display: block;
+        text-align: center;
+    }
+
+    .content-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .main-content {
+        border-right: none;
+        border-bottom: 1px solid var(--news-border);
+    }
+
+    .masthead-title {
+        font-size: 28px;
+        letter-spacing: 0.15em;
+    }
+
+    .masthead-meta {
+        text-align: center;
+    }
+
+    .issue-info {
+        justify-content: center;
+    }
+
+    .section-title {
+        font-size: 18px;
+    }
+}
+
+/* Print Styles */
+@media print {
+    body {
+        background: #fff;
+    }
+
+    body::before {
+        display: none;
+    }
+
+    .newspaper {
+        padding: 0;
+    }
+
+    .paper-sheet {
+        box-shadow: none;
+    }
+
+    .speed-lines,
+    .speed-lines-reverse {
+        display: none;
+    }
+}
+
+/* Focus Effect for Emphasis */
+.emphasis-box {
+    position: relative;
+    padding: 4px 12px;
+    display: inline-block;
+    background: linear-gradient(
+        to right,
+        transparent 0px,
+        transparent 2px,
+        var(--news-accent) 2px,
+        var(--news-accent) 4px,
+        transparent 4px,
+        transparent 100%
+    );
+    background-size: 6px 100%;
+}
+
+/* Double Circle Emphasis */
+.double-circle-emphasis {
+    position: relative;
+}
+
+.double-circle-emphasis::before {
+    content: '';
+    position: absolute;
+    inset: -4px;
+    border: 2px solid var(--news-accent);
+    border-radius: 50%;
+    animation: pulse 2s ease-in-out infinite;
+}
+
+@keyframes pulse {
+    0%, 100% {
+        opacity: 1;
+        transform: scale(1);
+    }
+    50% {
+        opacity: 0.7;
+        transform: scale(1.05);
+    }
+}
+</style>
+</head>
+<body>
+<div class="newspaper">
+    <div class="paper-sheet">
+        <div class="halftone-overlay"></div>
+
+        <!-- Header -->
+        <header class="paper-header">
+            <div class="masthead">
+                <div class="masthead-title">履歴新聞</div>
+                <div class="masthead-meta">
+                    <div class="issue-info">
+                        <span class="issue-number">第2025号</span>
+                        <span>2025年2月6日発行</span>
+                    </div>
+                    <div>毎週更新 ≫ 生涯現役エンジニア</div>
+                </div>
+            </div>
+        </header>
+
+        <!-- Hero Section with Speed Lines -->
+        <section class="hero-section">
+            <div class="speed-lines"></div>
+            <div class="speed-lines-reverse"></div>
+            <div class="hero-content">
+                <div class="hero-main">
+                    <h1 class="hero-title motion-lines">
+                        SHIJE WAI
+                    </h1>
+                    <p class="hero-subtitle">フロントエンドエンジニア & UI/UXデザイナー</p>
+                    <div class="speech-bubble">
+                        コードで創造！デザインで感動！
+                    </div>
+                </div>
+                <div class="portrait-frame">
+                    <div class="sparkle sparkle-1"></div>
+                    <div class="sparkle sparkle-2"></div>
+                    <span class="portrait-initials">SW</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- Content Grid -->
+        <div class="content-grid">
+            <!-- Main Content -->
+            <main class="main-content">
+                <!-- Profile Section -->
+                <section class="section">
+                    <div class="section-header">
+                        <div class="section-icon">私</div>
+                        <h2 class="section-title">自己紹介</h2>
+                    </div>
+                    <article class="article">
+                        <p class="article-content">
+                            <span class="emphasis-box">モダンなWeb技術</span>と<span class="emphasis-box">美的センス</span>を融合させ、ユーザーに「使っていて楽しい」体験を届けるエンジニアです。フロントエンド開発歴5年以上、デザイン歴3年の経験を持つ。TypeScript、React、Vue.jsを得意とし、パフォーマンス最適化にも注力しています。
+                        </p>
+                    </article>
+                </section>
+
+                <!-- Experience Section -->
+                <section class="section">
+                    <div class="section-header">
+                        <div class="section-icon">歴</div>
+                        <h2 class="section-title">職務経歴</h2>
+                    </div>
+                    <article class="article">
+                        <div class="article-headline">シニアフロントエンドエンジニア</div>
+                        <div class="article-meta">某テック株式会社 | 2023年 — 現在</div>
+                        <div class="article-content">
+                            <ul>
+                                <li>React + TypeScriptを使用した大規模Webアプリケーションの設計・開発</li>
+                                <li>デザインシステムの構築とチーム内展開</li>
+                                <li>コードレビューやメンター業務を通じたチームの技術力向上</li>
+                            </ul>
+                        </div>
+                    </article>
+                    <article class="article">
+                        <div class="article-headline">フロントエンドエンジニア</div>
+                        <div class="article-meta">デジタル制作プロダクション | 2020年 — 2023年</div>
+                        <div class="article-content">
+                            <ul>
+                                <li>Vue.js/Nuxt.jsによる企業サイト構築</li>
+                                <li>UI/UXデザインから実装までの一貫した開発</li>
+                                <li>アクセシビリティ対応とSEO最適化</li>
+                            </ul>
+                        </div>
+                    </article>
+                </section>
+
+                <!-- Education Section -->
+                <section class="section">
+                    <div class="section-header">
+                        <div class="section-icon">学</div>
+                        <h2 class="section-title">学歴</h2>
+                    </div>
+                    <article class="article">
+                        <div class="article-headline">情報工学部 コンピュータサイエンス学科</div>
+                        <div class="article-meta">2016年 — 2020年</div>
+                        <div class="article-content">
+                            <p>Webシステム開発、ユーザーインターフェースデザイン、アルゴリズムを専攻。卒業研究では「AIを活用したUI自動生成システム」を開発。</p>
+                        </div>
+                    </article>
+                </section>
+            </main>
+
+            <!-- Sidebar -->
+            <aside class="sidebar">
+                <!-- Contact Box -->
+                <div class="contact-box">
+                    <div class="contact-item">
+                        <span class="contact-icon">📧</span>
+                        <span>shije.wai@example.com</span>
+                    </div>
+                    <div class="contact-item">
+                        <span class="contact-icon">🌐</span>
+                        <span>github.com/shijenwai</span>
+                    </div>
+                    <div class="contact-item">
+                        <span class="contact-icon">📍</span>
+                        <span>東京, 日本</span>
+                    </div>
+                </div>
+
+                <!-- Skills Section -->
+                <div class="section">
+                    <div class="section-header">
+                        <div class="section-icon">技</div>
+                        <h2 class="section-title">スキル</h2>
+                    </div>
+                    <div class="skill-tags">
+                        <span class="skill-tag level-expert">TypeScript</span>
+                        <span class="skill-tag level-expert">React</span>
+                        <span class="skill-tag level-advanced">Vue.js</span>
+                        <span class="skill-tag level-advanced">Next.js</span>
+                        <span class="skill-tag level-advanced">TailwindCSS</span>
+                        <span class="skill-tag">Node.js</span>
+                        <span class="skill-tag">Figma</span>
+                        <span class="skill-tag">Git</span>
+                    </div>
+                </div>
+
+                <!-- Awards Section -->
+                <div class="section">
+                    <div class="section-header">
+                        <div class="section-icon">賞</div>
+                        <h2 class="section-title">受賞歴</h2>
+                    </div>
+                    <div class="award-badge">
+                        <div class="award-icon">★</div>
+                        <div class="award-text">
+                            <div class="award-title">ベストコード賞</div>
+                            <div class="award-year">2024年 社内ハッカソン</div>
+                        </div>
+                    </div>
+                    <div class="award-badge">
+                        <div class="award-icon">🎖</div>
+                        <div class="award-text">
+                            <div class="award-title">優秀賞</div>
+                            <div class="award-year">2023年 デザインコンテスト</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Languages -->
+                <div class="section">
+                    <div class="section-header">
+                        <div class="section-icon">語</div>
+                        <h2 class="section-title">言語</h2>
+                    </div>
+                    <div class="article-content">
+                        <p><strong>日本語</strong> — ビジネスレベル</p>
+                        <p><strong>英語</strong> — 中級（TOEIC 800）</p>
+                        <p><strong>中国語</strong> — ネイティブ</p>
+                    </div>
+                </div>
+            </aside>
+        </div>
+
+        <!-- Footer -->
+        <footer class="paper-footer">
+            <p class="footer-text">© 2025 SHIJE WAI — この履歴書はHTMLとCSSで作成されています</p>
+        </footer>
+    </div>
+</div>
+</body>
+</html>
