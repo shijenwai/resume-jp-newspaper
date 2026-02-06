@@ -1,0 +1,976 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>技術新聞 — 渡辺翔太 履歴書</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@400;700;900&family=Shippori+Mincho:wght@400;700;800&family=Zen+Old+Mincho:wght@400;700;900&display=swap" rel="stylesheet">
+<style>
+/* ===== RESET & BASE ===== */
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{font-size:16px;scroll-behavior:smooth}
+body{
+  font-family:"Noto Serif JP","Shippori Mincho",serif;
+  background:#F5F0E8;
+  color:#1A1A1A;
+  line-height:1.8;
+  overflow-x:hidden;
+  position:relative;
+}
+
+/* ===== HALFTONE OVERLAY (全ページ) ===== */
+body::before{
+  content:"";
+  position:fixed;
+  inset:0;
+  background:radial-gradient(circle,#C4B89A 0.8px,transparent 0.8px);
+  background-size:6px 6px;
+  opacity:0.07;
+  pointer-events:none;
+  z-index:9999;
+}
+
+/* ===== NEWSPAPER WRAPPER ===== */
+.newspaper{
+  max-width:1200px;
+  margin:0 auto;
+  padding:12px;
+  position:relative;
+}
+
+/* ===== MASTHEAD (題字) ===== */
+.masthead{
+  border-bottom:4px double #1A1A1A;
+  padding-bottom:8px;
+  margin-bottom:4px;
+  text-align:center;
+  position:relative;
+}
+.masthead-top{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  font-size:0.7rem;
+  letter-spacing:0.1em;
+  color:#555;
+  padding:2px 8px;
+}
+.masthead-title{
+  font-family:"Zen Old Mincho","Noto Serif JP",serif;
+  font-size:clamp(2.5rem,6vw,4.5rem);
+  font-weight:900;
+  letter-spacing:0.3em;
+  line-height:1.2;
+  position:relative;
+  display:inline-block;
+}
+.masthead-title::before{
+  content:"第 12,847 号";
+  position:absolute;
+  left:-120px;
+  top:50%;
+  transform:translateY(-50%);
+  font-size:0.65rem;
+  font-weight:400;
+  letter-spacing:0.05em;
+  writing-mode:vertical-rl;
+  color:#888;
+}
+.masthead-subtitle{
+  font-size:0.75rem;
+  letter-spacing:0.5em;
+  color:#C41E3A;
+  margin-top:2px;
+}
+.dateline{
+  display:flex;
+  justify-content:space-between;
+  border-top:1px solid #1A1A1A;
+  border-bottom:2px solid #1A1A1A;
+  padding:3px 8px;
+  font-size:0.72rem;
+  letter-spacing:0.15em;
+}
+
+/* ===== BREAKING NEWS TICKER ===== */
+.ticker{
+  background:#C41E3A;
+  color:#fff;
+  padding:4px 0;
+  overflow:hidden;
+  position:relative;
+  margin-bottom:8px;
+  font-size:0.8rem;
+  font-weight:700;
+  letter-spacing:0.08em;
+}
+.ticker-inner{
+  display:flex;
+  white-space:nowrap;
+  animation:tickerScroll 25s linear infinite;
+}
+.ticker-item{margin-right:4em}
+.ticker-badge{
+  background:#FFD700;
+  color:#1A1A1A;
+  padding:1px 8px;
+  margin-right:8px;
+  font-weight:900;
+  font-size:0.7rem;
+}
+@keyframes tickerScroll{
+  0%{transform:translateX(0)}
+  100%{transform:translateX(-50%)}
+}
+
+/* ===== MAIN GRID ===== */
+.grid-main{
+  display:grid;
+  grid-template-columns:1fr 2.2fr 1fr;
+  gap:0;
+  border:2px solid #1A1A1A;
+  position:relative;
+}
+.grid-main>*{
+  padding:10px 12px;
+  border-right:2px solid #1A1A1A;
+}
+.grid-main>*:last-child{border-right:none}
+
+/* ===== COLUMN BORDERS ===== */
+.col-border{
+  border-bottom:1px solid #999;
+  padding-bottom:10px;
+  margin-bottom:10px;
+}
+
+/* ===== SECTION LABELS ===== */
+.section-label{
+  display:inline-block;
+  background:#1A1A1A;
+  color:#F5F0E8;
+  font-size:0.65rem;
+  padding:2px 10px;
+  letter-spacing:0.2em;
+  margin-bottom:6px;
+  font-weight:700;
+}
+.section-label--red{background:#C41E3A}
+.section-label--blue{background:#3D5A80}
+
+/* ===== HEADLINES ===== */
+.headline-main{
+  font-family:"Zen Old Mincho","Noto Serif JP",serif;
+  font-size:clamp(1.6rem,3.5vw,2.4rem);
+  font-weight:900;
+  line-height:1.3;
+  margin-bottom:6px;
+  letter-spacing:0.05em;
+  position:relative;
+}
+.headline-sub{
+  font-size:clamp(1rem,2vw,1.3rem);
+  font-weight:700;
+  line-height:1.4;
+  margin-bottom:8px;
+  color:#333;
+  border-left:3px solid #C41E3A;
+  padding-left:8px;
+}
+.headline-small{
+  font-size:0.95rem;
+  font-weight:700;
+  margin-bottom:4px;
+  letter-spacing:0.05em;
+}
+
+/* ===== BODY TEXT ===== */
+.body-text{
+  font-size:0.82rem;
+  line-height:1.9;
+  text-align:justify;
+  letter-spacing:0.02em;
+}
+.body-text p{margin-bottom:8px;text-indent:1em}
+
+/* ===== VERTICAL TEXT COLUMN ===== */
+.vertical-col{
+  writing-mode:vertical-rl;
+  text-orientation:mixed;
+  line-height:2;
+  font-size:0.82rem;
+  letter-spacing:0.08em;
+}
+.vertical-col .headline-small{
+  font-size:1.05rem;
+  letter-spacing:0.15em;
+  margin-bottom:8px;
+}
+
+/* ===== MANGA EFFECTS ===== */
+
+/* Speed Lines Background */
+.speed-lines{
+  position:relative;
+  overflow:hidden;
+}
+.speed-lines::after{
+  content:"";
+  position:absolute;
+  top:50%;left:50%;
+  width:200%;height:200%;
+  transform:translate(-50%,-50%);
+  background:repeating-conic-gradient(
+    transparent 0deg,transparent 2deg,
+    rgba(26,26,26,0.03) 2deg,rgba(26,26,26,0.03) 3deg
+  );
+  pointer-events:none;
+  z-index:0;
+}
+.speed-lines>*{position:relative;z-index:1}
+
+/* Halftone Pattern Section */
+.halftone-bg{
+  position:relative;
+}
+.halftone-bg::before{
+  content:"";
+  position:absolute;
+  inset:0;
+  background:radial-gradient(circle,#C4B89A 1.2px,transparent 1.2px);
+  background-size:5px 5px;
+  opacity:0.15;
+  pointer-events:none;
+}
+
+/* Onomatopoeia */
+.sfx{
+  position:absolute;
+  font-family:"Zen Old Mincho",Impact,sans-serif;
+  font-weight:900;
+  color:transparent;
+  -webkit-text-stroke:2px #1A1A1A;
+  opacity:0.12;
+  pointer-events:none;
+  z-index:0;
+  line-height:1;
+  letter-spacing:-0.05em;
+}
+.sfx--red{-webkit-text-stroke:2px #C41E3A;opacity:0.10}
+
+/* Speech Bubble */
+.speech-bubble{
+  position:relative;
+  background:#fff;
+  border:2.5px solid #1A1A1A;
+  border-radius:18px;
+  padding:14px 18px;
+  margin:12px 0;
+  font-size:0.85rem;
+  font-weight:700;
+  line-height:1.5;
+}
+.speech-bubble::after{
+  content:"";
+  position:absolute;
+  bottom:-14px;left:28px;
+  width:0;height:0;
+  border-left:10px solid transparent;
+  border-right:10px solid transparent;
+  border-top:14px solid #1A1A1A;
+}
+.speech-bubble::before{
+  content:"";
+  position:absolute;
+  bottom:-10px;left:30px;
+  width:0;height:0;
+  border-left:8px solid transparent;
+  border-right:8px solid transparent;
+  border-top:11px solid #fff;
+  z-index:1;
+}
+
+/* Impact Frame */
+.impact-frame{
+  border:3.5px solid #1A1A1A;
+  transform:rotate(-0.5deg);
+  position:relative;
+  overflow:hidden;
+}
+.impact-frame--tilt{transform:rotate(1deg)}
+
+/* Starburst Badge */
+.starburst{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  width:70px;height:70px;
+  background:#C41E3A;
+  color:#fff;
+  font-size:0.6rem;
+  font-weight:900;
+  text-align:center;
+  line-height:1.2;
+  clip-path:polygon(
+    50% 0%,61% 11%,75% 3%,78% 18%,95% 20%,88% 35%,
+    100% 50%,88% 65%,95% 80%,78% 82%,75% 97%,61% 89%,
+    50% 100%,39% 89%,25% 97%,22% 82%,5% 80%,12% 65%,
+    0% 50%,12% 35%,5% 20%,22% 18%,25% 3%,39% 11%
+  );
+  flex-shrink:0;
+  letter-spacing:0.05em;
+}
+
+/* Manga Panel Grid */
+.manga-panels{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:4px;
+  border:3px solid #1A1A1A;
+  background:#1A1A1A;
+}
+.manga-panel{
+  background:#F5F0E8;
+  padding:12px;
+  position:relative;
+  overflow:hidden;
+  min-height:100px;
+}
+.manga-panel--wide{grid-column:span 2}
+
+/* Screen Tone */
+.screen-tone{
+  position:relative;
+}
+.screen-tone::after{
+  content:"";
+  position:absolute;
+  inset:0;
+  background:repeating-linear-gradient(
+    45deg,
+    transparent,transparent 2px,
+    rgba(26,26,26,0.04) 2px,rgba(26,26,26,0.04) 4px
+  );
+  pointer-events:none;
+}
+
+/* ===== SKILLS TABLE ===== */
+.skills-table{
+  width:100%;
+  border-collapse:collapse;
+  font-size:0.75rem;
+  margin:6px 0;
+}
+.skills-table th{
+  background:#1A1A1A;
+  color:#F5F0E8;
+  padding:3px 6px;
+  text-align:left;
+  font-weight:700;
+  letter-spacing:0.1em;
+  font-size:0.65rem;
+}
+.skills-table td{
+  padding:3px 6px;
+  border-bottom:1px solid #ccc;
+  vertical-align:top;
+}
+.skills-table tr:nth-child(even){background:rgba(0,0,0,0.02)}
+
+/* Skill Bar */
+.skill-bar{
+  height:8px;
+  background:#e0d8ca;
+  position:relative;
+  margin-top:2px;
+}
+.skill-bar-fill{
+  height:100%;
+  background:#1A1A1A;
+  position:relative;
+}
+.skill-bar-fill--red{background:#C41E3A}
+.skill-bar-fill--blue{background:#3D5A80}
+
+/* ===== TIMELINE ===== */
+.timeline{position:relative;padding-left:16px}
+.timeline::before{
+  content:"";
+  position:absolute;
+  left:4px;top:0;bottom:0;
+  width:2px;
+  background:#1A1A1A;
+}
+.timeline-item{
+  position:relative;
+  margin-bottom:14px;
+  padding-left:8px;
+}
+.timeline-item::before{
+  content:"";
+  position:absolute;
+  left:-16px;top:6px;
+  width:10px;height:10px;
+  background:#C41E3A;
+  border:2px solid #1A1A1A;
+  border-radius:50%;
+}
+.timeline-date{
+  font-size:0.65rem;
+  font-weight:700;
+  color:#C41E3A;
+  letter-spacing:0.1em;
+}
+.timeline-title{
+  font-size:0.85rem;
+  font-weight:700;
+  margin:1px 0;
+}
+.timeline-desc{
+  font-size:0.75rem;
+  color:#555;
+  line-height:1.6;
+}
+
+/* ===== CONTACT CLASSIFIED ===== */
+.classified{
+  border:2px dashed #1A1A1A;
+  padding:10px;
+  background:repeating-linear-gradient(
+    0deg,#F5F0E8,#F5F0E8 18px,#e8e0d0 18px,#e8e0d0 19px
+  );
+}
+.classified-title{
+  text-align:center;
+  font-size:1rem;
+  font-weight:900;
+  border-bottom:2px solid #1A1A1A;
+  padding-bottom:4px;
+  margin-bottom:8px;
+  letter-spacing:0.3em;
+}
+.classified-item{
+  font-size:0.75rem;
+  margin-bottom:4px;
+  display:flex;
+  gap:6px;
+  align-items:baseline;
+}
+.classified-icon{
+  flex-shrink:0;
+  width:16px;
+  height:16px;
+}
+
+/* ===== LOWER GRID ===== */
+.grid-lower{
+  display:grid;
+  grid-template-columns:1.4fr 1fr 1fr;
+  gap:0;
+  border:2px solid #1A1A1A;
+  border-top:none;
+}
+.grid-lower>*{
+  padding:10px 12px;
+  border-right:2px solid #1A1A1A;
+}
+.grid-lower>*:last-child{border-right:none}
+
+/* ===== MANGA BOTTOM STRIP ===== */
+.manga-strip{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:3px;
+  background:#1A1A1A;
+  border:3px solid #1A1A1A;
+  margin-top:8px;
+}
+.manga-strip .manga-panel{
+  min-height:130px;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  align-items:center;
+  text-align:center;
+}
+
+/* ===== FOOTER ===== */
+.footer{
+  text-align:center;
+  padding:12px;
+  font-size:0.65rem;
+  color:#888;
+  letter-spacing:0.2em;
+  border-top:2px solid #1A1A1A;
+  margin-top:8px;
+}
+
+/* ===== FLOATING SFX ===== */
+.sfx-float{
+  animation:sfxFloat 4s ease-in-out infinite alternate;
+}
+@keyframes sfxFloat{
+  0%{transform:translateY(0) rotate(-3deg)}
+  100%{transform:translateY(-6px) rotate(3deg)}
+}
+
+/* ===== BLINKING BREAKING ===== */
+.blink{animation:blink 1.2s step-end infinite}
+@keyframes blink{
+  0%,100%{opacity:1}
+  50%{opacity:0.3}
+}
+
+/* ===== PORTRAIT CSS ART ===== */
+.portrait{
+  width:90px;height:110px;
+  background:#e8e0d0;
+  border:3px solid #1A1A1A;
+  position:relative;
+  margin:8px auto;
+  overflow:hidden;
+}
+.portrait-head{
+  width:40px;height:40px;
+  background:#d4c5a9;
+  border:2px solid #1A1A1A;
+  border-radius:50%;
+  position:absolute;
+  top:12px;left:50%;
+  transform:translateX(-50%);
+}
+.portrait-body{
+  width:56px;height:40px;
+  background:#3D5A80;
+  border:2px solid #1A1A1A;
+  border-radius:28px 28px 0 0;
+  position:absolute;
+  bottom:0;left:50%;
+  transform:translateX(-50%);
+}
+
+/* ===== REDUCED MOTION ===== */
+@media (prefers-reduced-motion:reduce){
+  .ticker-inner{animation:none}
+  .sfx-float{animation:none}
+  .blink{animation:none}
+}
+
+/* ===== RESPONSIVE ===== */
+@media (max-width:900px){
+  .grid-main{
+    grid-template-columns:1fr 1.5fr;
+  }
+  .grid-main>.col-right{
+    grid-column:span 2;
+  }
+  .grid-lower{
+    grid-template-columns:1fr 1fr;
+  }
+  .grid-lower>*:last-child{
+    grid-column:span 2;
+  }
+  .manga-strip{
+    grid-template-columns:repeat(2,1fr);
+  }
+  .masthead-title::before{display:none}
+}
+@media (max-width:600px){
+  .grid-main{
+    grid-template-columns:1fr;
+  }
+  .grid-main>*{border-right:none;border-bottom:2px solid #1A1A1A}
+  .grid-main>*:last-child{border-bottom:none}
+  .grid-main>.col-right{grid-column:auto}
+  .grid-lower{grid-template-columns:1fr}
+  .grid-lower>*{border-right:none;border-bottom:2px solid #1A1A1A}
+  .grid-lower>*:last-child{grid-column:auto;border-bottom:none}
+  .manga-strip{grid-template-columns:1fr 1fr}
+  .vertical-col{
+    writing-mode:horizontal-tb;
+    text-orientation:initial;
+  }
+  .headline-main{font-size:1.5rem}
+  .dateline{flex-direction:column;gap:2px;text-align:center}
+}
+</style>
+</head>
+<body>
+
+<div class="newspaper">
+
+  <!-- ========== MASTHEAD ========== -->
+  <header class="masthead">
+    <div class="masthead-top">
+      <span>毎日発行</span>
+      <span>定価 ￥150（税込）</span>
+      <span>〒100-0001 東京都千代田区</span>
+    </div>
+    <div class="masthead-title">技 術 新 聞</div>
+    <div class="masthead-subtitle">― THE TECH SHINBUN ―</div>
+    <div class="dateline">
+      <span>令和八年（2026）二月六日　木曜日</span>
+      <span>天気：晴れ時々コード</span>
+      <span>【朝刊】</span>
+    </div>
+  </header>
+
+  <!-- ========== BREAKING NEWS TICKER ========== -->
+  <div class="ticker" role="marquee" aria-label="速報ニュース">
+    <div class="ticker-inner">
+      <span class="ticker-item"><span class="ticker-badge blink">速報</span>渡辺翔太氏、年間コミット数 2,400 超を達成 ── 業界注目</span>
+      <span class="ticker-item"><span class="ticker-badge">NEW</span>TypeScript + Rust ハイブリッド開発で処理速度 300% 向上に成功</span>
+      <span class="ticker-item"><span class="ticker-badge">特報</span>AI チャットボット基盤を独自設計 ── MAU 50万突破</span>
+      <span class="ticker-item"><span class="ticker-badge blink">速報</span>渡辺翔太氏、年間コミット数 2,400 超を達成 ── 業界注目</span>
+      <span class="ticker-item"><span class="ticker-badge">NEW</span>TypeScript + Rust ハイブリッド開発で処理速度 300% 向上に成功</span>
+      <span class="ticker-item"><span class="ticker-badge">特報</span>AI チャットボット基盤を独自設計 ── MAU 50万突破</span>
+    </div>
+  </div>
+
+  <!-- ========== MAIN GRID ========== -->
+  <main class="grid-main">
+
+    <!-- LEFT COLUMN — Vertical text + Skills -->
+    <aside class="col-left">
+      <!-- Vertical Profile Intro -->
+      <div class="vertical-col col-border" style="height:220px">
+        <div class="headline-small">人物紹介</div>
+        <p>渡辺翔太。東京在住のシニアソフトウェアエンジニア。十年以上にわたり、ウェブ技術とクラウド基盤の最前線で活躍。確かな技術力と柔軟な発想で、数々のプロダクトを世に送り出してきた。</p>
+      </div>
+
+      <!-- Skills Market Report -->
+      <div style="position:relative">
+        <span class="section-label section-label--blue">技術市況</span>
+        <div class="headline-small" style="margin-top:4px">主要技術スキル指数</div>
+
+        <!-- SFX -->
+        <span class="sfx sfx--red" style="font-size:2.8rem;top:-8px;right:-5px;transform:rotate(-12deg)">バリ</span>
+
+        <table class="skills-table">
+          <thead>
+            <tr><th>技術</th><th>熟練度</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>TypeScript / JavaScript</td><td><div class="skill-bar"><div class="skill-bar-fill" style="width:95%"></div></div></td></tr>
+            <tr><td>React / Next.js</td><td><div class="skill-bar"><div class="skill-bar-fill skill-bar-fill--red" style="width:92%"></div></div></td></tr>
+            <tr><td>Node.js / Deno</td><td><div class="skill-bar"><div class="skill-bar-fill skill-bar-fill--blue" style="width:88%"></div></div></td></tr>
+            <tr><td>Rust</td><td><div class="skill-bar"><div class="skill-bar-fill" style="width:75%"></div></div></td></tr>
+            <tr><td>Python / AI/ML</td><td><div class="skill-bar"><div class="skill-bar-fill skill-bar-fill--red" style="width:82%"></div></div></td></tr>
+            <tr><td>AWS / GCP</td><td><div class="skill-bar"><div class="skill-bar-fill skill-bar-fill--blue" style="width:85%"></div></div></td></tr>
+            <tr><td>Docker / K8s</td><td><div class="skill-bar"><div class="skill-bar-fill" style="width:80%"></div></div></td></tr>
+            <tr><td>PostgreSQL / Redis</td><td><div class="skill-bar"><div class="skill-bar-fill skill-bar-fill--red" style="width:86%"></div></div></td></tr>
+          </tbody>
+        </table>
+
+        <div style="font-size:0.65rem;color:#888;text-align:right;margin-top:4px">※ 自己評価に基づく</div>
+      </div>
+    </aside>
+
+    <!-- CENTER COLUMN — Main Story -->
+    <article class="col-center speed-lines" style="position:relative">
+      <!-- Floating SFX -->
+      <span class="sfx sfx-float" style="font-size:5rem;top:-15px;left:10px;transform:rotate(-8deg)">ドドド</span>
+      <span class="sfx sfx--red sfx-float" style="font-size:3.2rem;bottom:30px;right:5px;transform:rotate(5deg)">ゴゴゴ</span>
+
+      <span class="section-label section-label--red">一面トップ</span>
+
+      <h1 class="headline-main">
+        天才エンジニア現る──<br>
+        渡辺翔太氏、十年の軌跡
+      </h1>
+
+      <div class="headline-sub">
+        フルスタック開発からAI基盤設計まで<br>
+        その技術力が業界を震撼させる
+      </div>
+
+      <!-- Portrait + Intro -->
+      <div style="display:flex;gap:14px;align-items:flex-start;margin-bottom:10px">
+        <div>
+          <div class="impact-frame">
+            <div class="portrait">
+              <div class="portrait-head"></div>
+              <div class="portrait-body"></div>
+            </div>
+          </div>
+          <div style="text-align:center;font-size:0.6rem;margin-top:3px;font-weight:700">▲ 渡辺翔太氏</div>
+        </div>
+        <div class="body-text" style="flex:1">
+          <p>東京都内のテクノロジー企業に勤務する渡辺翔太氏（32）は、フルスタックエンジニアとして十年以上のキャリアを持つ。フロントエンドからバックエンド、インフラ、そしてAI領域まで幅広い技術スタックを操り、これまでに手がけたプロダクトは累計ユーザー数百万人を突破している。</p>
+        </div>
+      </div>
+
+      <!-- Speech Bubble Quote -->
+      <div class="speech-bubble">
+        「コードは詩だ。美しいアーキテクチャは、読む者の心を動かす」── 渡辺翔太
+      </div>
+
+      <div class="body-text">
+        <p>同氏は大学在学中からオープンソースコミュニティに積極的に参加し、卒業後は大手IT企業に入社。わずか三年でテックリードに昇進し、マイクロサービスアーキテクチャへの全社移行プロジェクトを主導した。その後、スタートアップのCTOを経て、現在はシニアエンジニアとして次世代プロダクトの設計に携わっている。</p>
+        <p>「テクノロジーの真価は、人々の生活をいかに豊かにするかで測られる」と語る渡辺氏。AI技術の民主化を信条に掲げ、誰もが高度な技術の恩恵を受けられる社会の実現を目指している。</p>
+      </div>
+
+      <!-- Starburst Achievement -->
+      <div style="display:flex;gap:10px;align-items:center;margin-top:10px;flex-wrap:wrap">
+        <div class="starburst">受賞<br>多数</div>
+        <div style="font-size:0.75rem;line-height:1.6;flex:1">
+          <strong>主な受賞歴：</strong>Best Tech Lead Award 2023 / OSS Contributor of the Year 2024 / AI Innovation Prize 2025
+        </div>
+      </div>
+    </article>
+
+    <!-- RIGHT COLUMN — Education + Contact -->
+    <aside class="col-right">
+      <!-- Education -->
+      <div class="col-border" style="position:relative">
+        <span class="section-label">論説・教育</span>
+        <span class="sfx" style="font-size:2rem;top:0;right:0;transform:rotate(10deg)">！</span>
+
+        <div class="headline-small" style="margin-top:4px">学歴・資格</div>
+
+        <div class="halftone-bg" style="padding:8px;margin-top:6px">
+          <div style="font-size:0.78rem;font-weight:700;margin-bottom:2px">東京大学 工学部</div>
+          <div style="font-size:0.68rem;color:#666">情報工学科 2012 – 2016</div>
+          <div style="font-size:0.68rem;color:#666;margin-top:2px">優秀卒業論文賞 受賞</div>
+        </div>
+
+        <div style="padding:8px;border-top:1px dashed #999;margin-top:6px">
+          <div style="font-size:0.78rem;font-weight:700;margin-bottom:2px">東京大学大学院</div>
+          <div style="font-size:0.68rem;color:#666">情報理工学系研究科 2016 – 2018</div>
+          <div style="font-size:0.68rem;color:#666;margin-top:2px">分散システム研究</div>
+        </div>
+
+        <div style="padding:8px;border-top:1px dashed #999;margin-top:6px">
+          <div style="font-size:0.72rem;font-weight:700">取得資格</div>
+          <ul style="font-size:0.68rem;padding-left:14px;color:#555;margin-top:3px;line-height:1.7">
+            <li>AWS Solutions Architect Professional</li>
+            <li>Google Cloud Professional</li>
+            <li>応用情報技術者</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Classified Contact -->
+      <div class="classified">
+        <div class="classified-title">案内広告</div>
+        <div class="classified-item">
+          <svg class="classified-icon" viewBox="0 0 24 24" fill="none" stroke="#1A1A1A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+          <span>s.watanabe@techshinbun.jp</span>
+        </div>
+        <div class="classified-item">
+          <svg class="classified-icon" viewBox="0 0 24 24" fill="none" stroke="#1A1A1A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/></svg>
+          <span>github.com/shotawatanabe</span>
+        </div>
+        <div class="classified-item">
+          <svg class="classified-icon" viewBox="0 0 24 24" fill="none" stroke="#1A1A1A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
+          <span>linkedin.com/in/shotawatanabe</span>
+        </div>
+        <div class="classified-item">
+          <svg class="classified-icon" viewBox="0 0 24 24" fill="none" stroke="#1A1A1A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+          <span>東京都渋谷区</span>
+        </div>
+      </div>
+    </aside>
+  </main>
+
+  <!-- ========== LOWER GRID ========== -->
+  <section class="grid-lower">
+    <!-- Experience Timeline -->
+    <article style="position:relative">
+      <span class="section-label section-label--red">特集記事</span>
+      <span class="sfx sfx--red sfx-float" style="font-size:3rem;top:-10px;right:5px;transform:rotate(8deg)">ズバッ</span>
+
+      <div class="headline-small" style="margin-top:4px;margin-bottom:10px">
+        職歴 ── キャリアの軌跡を追う
+      </div>
+
+      <div class="timeline">
+        <div class="timeline-item">
+          <div class="timeline-date">2024 – 現在</div>
+          <div class="timeline-title">株式会社フューチャーテック</div>
+          <div class="timeline-desc">シニアエンジニア。AI基盤プラットフォームの設計・開発を担当。LLM統合アーキテクチャを構築し、MAU50万のサービスを支える。</div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-date">2021 – 2024</div>
+          <div class="timeline-title">スタートアップXYZ（CTO）</div>
+          <div class="timeline-desc">技術戦略の策定からプロダクト開発まで全般を統括。エンジニアチーム15名を率い、シリーズBの資金調達に貢献。</div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-date">2018 – 2021</div>
+          <div class="timeline-title">メガコープ株式会社</div>
+          <div class="timeline-desc">テックリード。マイクロサービス移行プロジェクトを主導。年間ダウンタイムを99.99%削減し、全社的なCI/CD基盤を構築。</div>
+        </div>
+      </div>
+    </article>
+
+    <!-- Side story — Languages & Tools -->
+    <article class="screen-tone">
+      <span class="section-label section-label--blue">経済面</span>
+      <div class="headline-small" style="margin-top:4px">使用言語・ツール一覧</div>
+
+      <div style="margin-top:8px;font-size:0.72rem;line-height:2">
+        <div style="display:flex;flex-wrap:wrap;gap:4px">
+          <span style="border:1.5px solid #1A1A1A;padding:1px 7px;font-weight:700">TypeScript</span>
+          <span style="border:1.5px solid #1A1A1A;padding:1px 7px;font-weight:700">Rust</span>
+          <span style="border:1.5px solid #C41E3A;padding:1px 7px;color:#C41E3A;font-weight:700">React</span>
+          <span style="border:1.5px solid #1A1A1A;padding:1px 7px;font-weight:700">Next.js</span>
+          <span style="border:1.5px solid #3D5A80;padding:1px 7px;color:#3D5A80;font-weight:700">Python</span>
+          <span style="border:1.5px solid #1A1A1A;padding:1px 7px;font-weight:700">Go</span>
+          <span style="border:1.5px solid #C41E3A;padding:1px 7px;color:#C41E3A;font-weight:700">Node.js</span>
+          <span style="border:1.5px solid #1A1A1A;padding:1px 7px;font-weight:700">PostgreSQL</span>
+          <span style="border:1.5px solid #3D5A80;padding:1px 7px;color:#3D5A80;font-weight:700">Redis</span>
+          <span style="border:1.5px solid #1A1A1A;padding:1px 7px;font-weight:700">Docker</span>
+          <span style="border:1.5px solid #C41E3A;padding:1px 7px;color:#C41E3A;font-weight:700">K8s</span>
+          <span style="border:1.5px solid #1A1A1A;padding:1px 7px;font-weight:700">AWS</span>
+          <span style="border:1.5px solid #3D5A80;padding:1px 7px;color:#3D5A80;font-weight:700">GCP</span>
+          <span style="border:1.5px solid #1A1A1A;padding:1px 7px;font-weight:700">Terraform</span>
+          <span style="border:1.5px solid #1A1A1A;padding:1px 7px;font-weight:700">GraphQL</span>
+          <span style="border:1.5px solid #C41E3A;padding:1px 7px;color:#C41E3A;font-weight:700">LLM/RAG</span>
+        </div>
+      </div>
+
+      <div style="margin-top:12px;border-top:1px solid #999;padding-top:8px">
+        <div class="headline-small">開発実績（数字で見る）</div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-top:6px;font-size:0.7rem;text-align:center">
+          <div class="impact-frame" style="padding:8px;background:#fff">
+            <div style="font-size:1.4rem;font-weight:900;color:#C41E3A">2,400+</div>
+            <div>年間コミット</div>
+          </div>
+          <div class="impact-frame impact-frame--tilt" style="padding:8px;background:#fff">
+            <div style="font-size:1.4rem;font-weight:900;color:#3D5A80">50万</div>
+            <div>MAU達成</div>
+          </div>
+          <div class="impact-frame impact-frame--tilt" style="padding:8px;background:#fff">
+            <div style="font-size:1.4rem;font-weight:900;color:#1A1A1A">99.99%</div>
+            <div>可用性</div>
+          </div>
+          <div class="impact-frame" style="padding:8px;background:#fff">
+            <div style="font-size:1.4rem;font-weight:900;color:#C41E3A">15名</div>
+            <div>チーム規模</div>
+          </div>
+        </div>
+      </div>
+    </article>
+
+    <!-- Projects -->
+    <article style="position:relative">
+      <span class="section-label">社会面</span>
+      <span class="sfx" style="font-size:2.5rem;top:-5px;right:0;transform:rotate(-15deg)">ドン！</span>
+
+      <div class="headline-small" style="margin-top:4px;margin-bottom:8px">
+        注目プロジェクト
+      </div>
+
+      <div style="margin-bottom:10px" class="impact-frame" >
+        <div style="padding:8px;position:relative" class="halftone-bg">
+          <div style="font-size:0.8rem;font-weight:900">🔬 NeuraChat Engine</div>
+          <div style="font-size:0.7rem;color:#555;margin-top:3px;line-height:1.5">
+            LLM ベースの対話エンジン。RAG パイプラインを独自設計し、レスポンス速度を従来比 5 倍に高速化。
+          </div>
+        </div>
+      </div>
+
+      <div style="margin-bottom:10px" class="impact-frame impact-frame--tilt">
+        <div style="padding:8px">
+          <div style="font-size:0.8rem;font-weight:900">⚡ HyperDeploy</div>
+          <div style="font-size:0.7rem;color:#555;margin-top:3px;line-height:1.5">
+            ゼロダウンタイムデプロイ基盤。Terraform + K8s で構築し、デプロイ時間を 80% 短縮。
+          </div>
+        </div>
+      </div>
+
+      <div class="impact-frame">
+        <div style="padding:8px" class="screen-tone">
+          <div style="font-size:0.8rem;font-weight:900">📊 DataViz Studio</div>
+          <div style="font-size:0.7rem;color:#555;margin-top:3px;line-height:1.5">
+            リアルタイムデータ可視化ダッシュボード。WebSocket + D3.js で毎秒 10 万イベントを処理。
+          </div>
+        </div>
+      </div>
+    </article>
+  </section>
+
+  <!-- ========== MANGA STRIP — Hobbies ========== -->
+  <section aria-label="趣味・関心" style="position:relative">
+    <div style="text-align:center;margin:10px 0 4px">
+      <span class="section-label section-label--red" style="font-size:0.75rem;padding:3px 20px;letter-spacing:0.3em">四コマ漫画 ── 趣味の世界</span>
+    </div>
+
+    <div class="manga-strip">
+      <!-- Panel 1 -->
+      <div class="manga-panel" style="position:relative">
+        <span class="sfx sfx--red" style="font-size:2.2rem;top:2px;right:5px;transform:rotate(-10deg);opacity:0.18">カタカタ</span>
+        <div style="text-align:center">
+          <svg width="50" height="50" viewBox="0 0 50 50" style="margin-bottom:4px">
+            <rect x="8" y="12" width="34" height="24" rx="2" fill="none" stroke="#1A1A1A" stroke-width="2.5"/>
+            <rect x="14" y="38" width="22" height="3" rx="1" fill="#1A1A1A"/>
+            <line x1="16" y1="20" x2="36" y2="20" stroke="#C41E3A" stroke-width="1.5"/>
+            <line x1="16" y1="24" x2="30" y2="24" stroke="#3D5A80" stroke-width="1.5"/>
+            <line x1="16" y1="28" x2="34" y2="28" stroke="#1A1A1A" stroke-width="1"/>
+          </svg>
+          <div style="font-size:0.8rem;font-weight:900">OSS 開発</div>
+          <div style="font-size:0.65rem;color:#666;margin-top:2px">毎日の日課です</div>
+        </div>
+      </div>
+
+      <!-- Panel 2 -->
+      <div class="manga-panel halftone-bg" style="position:relative">
+        <span class="sfx" style="font-size:2rem;top:0;left:2px;transform:rotate(5deg);opacity:0.15">パシャ</span>
+        <div style="text-align:center">
+          <svg width="50" height="50" viewBox="0 0 50 50" style="margin-bottom:4px">
+            <rect x="10" y="14" width="30" height="22" rx="4" fill="none" stroke="#1A1A1A" stroke-width="2.5"/>
+            <circle cx="25" cy="25" r="7" fill="none" stroke="#C41E3A" stroke-width="2"/>
+            <circle cx="25" cy="25" r="3" fill="#C41E3A"/>
+            <rect x="17" y="11" width="8" height="4" rx="1" fill="#1A1A1A"/>
+          </svg>
+          <div style="font-size:0.8rem;font-weight:900">写真撮影</div>
+          <div style="font-size:0.65rem;color:#666;margin-top:2px">街角スナップが好き</div>
+        </div>
+      </div>
+
+      <!-- Panel 3 -->
+      <div class="manga-panel" style="position:relative">
+        <span class="sfx sfx--red" style="font-size:1.8rem;bottom:5px;right:2px;transform:rotate(12deg);opacity:0.15">ジャーン</span>
+        <div style="text-align:center">
+          <svg width="50" height="50" viewBox="0 0 50 50" style="margin-bottom:4px">
+            <path d="M15 38 L25 10 L35 38" fill="none" stroke="#1A1A1A" stroke-width="2.5" stroke-linecap="round"/>
+            <path d="M18 30 L32 30" stroke="#1A1A1A" stroke-width="2"/>
+            <circle cx="38" cy="15" r="5" fill="none" stroke="#C41E3A" stroke-width="2"/>
+            <line x1="38" y1="12" x2="38" y2="18" stroke="#C41E3A" stroke-width="1.5"/>
+            <line x1="35" y1="15" x2="41" y2="15" stroke="#C41E3A" stroke-width="1.5"/>
+          </svg>
+          <div style="font-size:0.8rem;font-weight:900">語学学習</div>
+          <div style="font-size:0.65rem;color:#666;margin-top:2px">英語・中国語を勉強中</div>
+        </div>
+      </div>
+
+      <!-- Panel 4 -->
+      <div class="manga-panel screen-tone" style="position:relative">
+        <span class="sfx" style="font-size:2.2rem;top:0;right:0;transform:rotate(-8deg);opacity:0.15">ワクワク</span>
+        <div style="text-align:center">
+          <svg width="50" height="50" viewBox="0 0 50 50" style="margin-bottom:4px">
+            <path d="M12 35 Q14 20 20 22 Q25 8 30 22 Q36 20 38 35 Z" fill="none" stroke="#1A1A1A" stroke-width="2.5"/>
+            <line x1="22" y1="35" x2="22" y2="25" stroke="#3D5A80" stroke-width="1.5"/>
+            <line x1="28" y1="35" x2="28" y2="20" stroke="#C41E3A" stroke-width="1.5"/>
+            <rect x="10" y="35" width="30" height="3" rx="1" fill="#1A1A1A"/>
+          </svg>
+          <div style="font-size:0.8rem;font-weight:900">登山</div>
+          <div style="font-size:0.65rem;color:#666;margin-top:2px">週末は山へ</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== FOOTER ========== -->
+  <footer class="footer">
+    <div>技術新聞社 ── 東京都千代田区大手町 1-1-1 ── TEL: 03-XXXX-XXXX</div>
+    <div style="margin-top:2px">© 2026 Tech Shinbun. All rights reserved. ── 本紙の無断転載を禁じます</div>
+    <div style="margin-top:4px;font-size:0.6rem;color:#aaa">※ これは渡辺翔太の履歴書をデザインしたフィクション新聞です</div>
+  </footer>
+
+</div>
+
+</body>
+</html>
